@@ -16,23 +16,22 @@ import javax.inject.Singleton
 
 
 @Module
-class AppModule {
+open class AppModule {
 
     @Provides
-    @Singleton
-    fun provideRepoRepository(repoService: RepoService): RepoRepository {
+    open fun provideRepoRepository(repoService: RepoService): RepoRepository {
         return RepoRepositoryImpl(repoService)
     }
 
     @Singleton
     @Provides
-    fun provideRepoService(retrofit: Retrofit): RepoService {
+    open fun provideRepoService(retrofit: Retrofit): RepoService {
         return retrofit.create(RepoService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    open fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
             .client(okHttpClient)
@@ -43,7 +42,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    open fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(1000, TimeUnit.SECONDS)
             .writeTimeout(100, TimeUnit.SECONDS)
@@ -53,7 +52,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    open fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }

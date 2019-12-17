@@ -1,6 +1,8 @@
 package com.tdd.uchit.repofetcher.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.tdd.uchit.repofetcher.dagger.DaggerTestAppComponent
+import com.tdd.uchit.repofetcher.dagger.TestAppModule
 import com.tdd.uchit.repofetcher.data.model.Repo
 import com.tdd.uchit.repofetcher.data.repository.RepoRepository
 import io.mockk.MockKAnnotations
@@ -15,6 +17,7 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.BlockJUnit4ClassRunner
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 @RunWith(BlockJUnit4ClassRunner::class)
 class RepoViewModelTest {
@@ -23,8 +26,10 @@ class RepoViewModelTest {
     @JvmField
     var rule: TestRule = InstantTaskExecutorRule()
 
+    @Inject
+    lateinit var repoRepository: RepoRepository
+
     @MockK
-    private lateinit var repoRepository: RepoRepository
     private lateinit var repoViewModel: RepoViewModel
 
     private val repos = listOf(
@@ -36,7 +41,12 @@ class RepoViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        repoViewModel = RepoViewModel()
+        val testComponent = DaggerTestAppComponent.builder()
+            .appModule(TestAppModule())
+            .build()
+
+        testComponent.inject(this)
+        repoViewModel = RepoViewModel(repoRepository)
     }
 
     @Test

@@ -59,4 +59,7 @@ dependencies {
     //Testing
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation "io.mockk:mockk:1.9.3.kotlin12"
+
+    //  to build TestComponent in test/ folder
+    kaptTest 'com.google.dagger:dagger-compiler:2.24'
 }

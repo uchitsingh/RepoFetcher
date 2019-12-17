@@ -9,10 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
-class RepoViewModel : ViewModel() {
-
-    @Inject
-    lateinit var repoRepository: RepoRepository
+class RepoViewModel @Inject constructor(var repoRepository: RepoRepository) : ViewModel() {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
     private var _repoObservable: MutableLiveData<List<Repo>> = MutableLiveData()
