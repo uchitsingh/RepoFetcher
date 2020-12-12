@@ -6,14 +6,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tdd.uchit.repofetcher.R
-import com.tdd.uchit.repofetcher.application.RepoApplication
 import com.tdd.uchit.repofetcher.data.repository.RepoRepository
 import com.tdd.uchit.repofetcher.ui.adapter.RepoAdapter
 import com.tdd.uchit.repofetcher.viewmodel.RepoViewModel
 import com.tdd.uchit.repofetcher.viewmodel.RepoViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_repo.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class RepoActivity : AppCompatActivity() {
 
     @Inject
@@ -27,7 +28,6 @@ class RepoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_repo)
 
         initRecyclerView()
-        (application as RepoApplication).appComponent.inject(this)
 
         repoViewModel = ViewModelProvider(
             this, RepoViewModelFactory(repository)

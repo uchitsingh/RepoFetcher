@@ -6,6 +6,8 @@ import com.tdd.uchit.repofetcher.data.repository.RepoRepositoryImpl
 import com.tdd.uchit.repofetcher.utils.Constant
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,10 +16,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
+@InstallIn(ApplicationComponent::class)
 @Module
 open class AppModule {
 
+    @Singleton
     @Provides
     open fun provideRepoRepository(repoService: RepoService): RepoRepository {
         return RepoRepositoryImpl(repoService)
